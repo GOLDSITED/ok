@@ -1,0 +1,16 @@
+
+
+<div style="margin:80px">
+    <h1 class="font-bold text-lg text-gray-500 item-center">Contact</h1>
+    <h4>Contact us directly if you have any questions</h4>
+    <p class="font-bold text-lg ">
+        Please write your name, phone-email, email address and a message below if you have any questions.
+        One of our staff members will be happy to contact you directly and answer your questions as soon as possible. 
+    </p>
+    <form class="bg-white" method="post">
+    {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
