@@ -13,8 +13,7 @@ def add_to_cart(request, slug):
     order_item, created = Cart.objects.get_or_create(
         item=item,
         user=request.user,
-        
-        
+        purchased=False
     )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -24,17 +23,17 @@ def add_to_cart(request, slug):
             order_item.quantity += 1
             order_item.save()
             messages.info(request, f"{item.name} quantity has updated.")
-            return redirect("products:cart-home")
+            return redirect("mainapp:cart-home")
         else:
             order.orderitems.add(order_item)
             messages.info(request, f"{item.name} has added to your cart.")
-            return redirect("products:cart-home")
+            return redirect("mainapp:cart-home")
     else:
         order = Order.objects.create(
             user=request.user)
         order.orderitems.add(order_item)
         messages.info(request, f"{item.name} has added to your cart.")
-        return redirect("products:cart-home")
+        return redirect("mainapp:cart-home")
 
 
 
@@ -66,13 +65,13 @@ def remove_from_cart(request, slug):
             )[0]
             order.orderitems.remove(order_item)
             messages.warning(request, "This item was removed from your cart.")
-            return redirect("products:home")
+            return redirect("mainapp:home")
         else:
             messages.warning(request, "This item was not in your cart")
-            return redirect("products:home")
+            return redirect("mainapp:home")
     else:
         messages.warning(request, "You do not have an active order")
-        return redirect("products:home")
+        return redirect("mainapp:home")
 
 
 # Cart View
@@ -81,7 +80,7 @@ def CartView(request):
 
     user = request.user
 
-    carts = Cart.objects.filter(user=user)
+    carts = Cart.objects.filter(user=user payment=False)
     orders = Order.objects.filter(user=user, ordered=False)
 
     if carts.exists():

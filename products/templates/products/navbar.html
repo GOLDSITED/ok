@@ -19,31 +19,54 @@
         <a class="nav-link" href="#">Electronics</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="#">Electronics</a>
+        <a class="nav-link" href="{% url 'users:contact' %}">Contact</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'products:about' %}">About</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'products:addProduct' %}">AddProduct</a>
       </li>
     
-      
+     
       {% if request.user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
       </li>
 
+   
+      </li>
+
+
+
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{% url 'products:cart-home' %}">
           <i class="fa fa-shopping-cart"></i> Cart
           <span class="badge badge-light">{{ request.user| cart_total }}</span>
         </a>
       </li>
-       <li class="nav-item">
-        
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'products:mylistings' %}">Mylistings</a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:profile' %}">Profile</a>
+      </li>
+
+
+
+    
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-tie"></i> {{ request.user.username }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Dashboard</a>
-          <a class="dropdown-item" href="#">Orders</a>
+          <a class="dropdown-item" href="{% url 'users:profile' %}">Dashboard</a>
+          <a class="dropdown-item" href="{% url 'checkout:order' %}">Orders</a>
+          <a class="dropdown-item" href="{% url 'products:mylistings' %}">Mylistings</a>
           <div class="dropdown-divider"></div>
           
          

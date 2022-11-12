@@ -40,11 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'products',
-    'cart',
+    'cartes',
     'users',
     'checkout',
     'crispy_forms',
     'django_filters',
+    'bootstrap4',
 ]
 # Template Pack initilization
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

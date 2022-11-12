@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils.crypto import get_random_string
 import stripe
 from django.conf import settings
-from cart.models import Order, Cart
+from cartes.models import Order
 
 stripe.api_key = settings.STRIPE_KEY
 
@@ -61,6 +61,7 @@ def payment(request):
 	return render(request, 'checkout/payment.html', {"key": key, "total": total})
 
 
+
 def charge(request):
 	order = Order.objects.get(user=request.user, ordered=False)
 	order_total = order.get_totals()
@@ -95,3 +96,21 @@ def orderView(request):
 		messages.warning(request, "You do not have an active order")
 		return redirect('/')
 	return render(request, 'checkout/order.html', context)
+
+
+class PaymentSuccessView(TemplateView):
+    template_name ='checkout/payment_success.html'
+
+    def get(self,request,*args,**kwargs):
+        session_id = request.GET.get('session_id')
+        if session_id is None:
+            return HttpResponseNotFound()
+        session = stripe.checkout.Session.retrieve(session_id)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        order = get_object_or_404(OrderDetail,stripe_payment_intent=session.payment_intent)
+        order.has_paid = True
+        order.save()
+        return render(request,self.template_name)
+
+class PaymentFailedView(TemplateView):
+    template_name = 'checkout/payment_failed.html'

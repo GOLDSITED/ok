@@ -5,10 +5,13 @@
 
 {% block content %}
 
-  <div class="container my-5">
-  	<h2 class="my-5">Featured Products</h2>
-    <div class="row">
-    <div class="col-md-3">
+
+   
+
+  <div class=" ">
+  	<h2 class="">Featured Products</h2>
+    <div class="row justify-content-center">
+    <div class="col-md-1">
          <form method="get">
             {{ filter.form| crispy }}
             <button type="submit">Searchs</button>
@@ -24,8 +27,10 @@
 				</div>
 				<figcaption class="info-wrap">
 					<h6 class="title text-dots"><a href="{% url 'products:product' product.slug   %}">{{ product.name }}</a></h6>
-					
+			
 					<div class="action-wrap">
+						
+					
 						<!-- <a href="cart/{{ product.slug }}" class="btn btn-primary btn-sm"> Add to Cart </a>
             			<a href="cart/" class="btn btn-primary btn-sm"> View Cart </a> -->
 <!--             <a href="remove/{{ product.slug }}" class="btn btn-danger btn-sm"> Remove</a>
@@ -34,13 +39,72 @@
 							<span class="price-new">${{product.price}}</span>
 							<del class="price-old">${{product.price}}</del>
 						</div> 
+						<p class="title mb-3">{{ product.preview_text }}</p>
+						<p class="title mb-3">{{ product.created_at }}</p>
 					</div> <!-- action-wrap -->
 				</figcaption>
 			</figure> <!-- card // -->
 		</div> <!-- col // -->
       {% endfor %}
+
 		</div>
 	</div>
   </div>
+  <div class="col-md-4">
+    <h2> Category</h2>
+    <a href="{% url 'products:home' %}?category={{ category.name }}">{{category.name}}</a>
+        {% for category in categories %}
+        
+        <li class="list:group-item">
+            <a href="{% url 'products:home' %}?category={{ category.name }}">{{category.name}}</a>
+
+        </li>
+
+        {% endfor %}
   </div>
+  </div>
+
+  <footer class="container mx-auto bg-white py-8 border-t border-gray-400">
+    <div class="container flex px-3 py-8 ">
+        <div class="w-full mx-auto flex flex-wrap">
+            <div class="flex w-full lg:w-1/2 ">
+             
+            </div>
+            <div class="flex w-full lg:w-1/2 lg:justify-end lg:text-right">
+                <div class="px-3 md:px-0">
+                    <h3 class="font-bold text-gray-900">Social</h3>
+                    <ul class="list-reset items-center pt-3">
+                        <li>
+                            <a class="inline-block no-underline hover:text-black hover:underline py-1 text-blue-900" href="https://twitter.com/Adeyemisam125">Twitter</a>
+
+                            <a class="inline-block no-underline hover:text-black hover:underline py-1 px-3 text-blue-900 " href="https://twitter.com/Adeyemisam125">Facebook</a>
+                            <a class="inline-block no-underline hover:text-black hover:underline py-1 px-3 text-blue-900 " href="https://twitter.com/Adeyemisam125">Instagram</a>
+                            <a class="inline-block no-underline hover:text-black hover:underline py-1 px-3 text-blue-900 " href="https://twitter.com/Adeyemisam125">Whatsapp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--pagination code starts here-->
+<div class="pagination flex justify-center items-center mb-20">
+    <span>
+        {% if products.has_previous %}
+        <a class="text-sm font-medium border py-2 px-4 items-center items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page=1">First</a>
+        <a class="text-sm font-medium border py-2 px-4 items-center items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+        <span class="text-sm font-medium border py-2 px-4 items-center items-center inline-flex relative text-green-500 border-green-500 z-10">
+        Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+    </span>
+
+    {% if page_obj.has_next %}
+    <a class="text-sm font-medium border py-2 px-4 items-center items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.next_page_number}}">Next</a>
+    <a class="text-sm font-medium border py-2 px-4 items-center items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+    {% endif %}
+    </span>
+</div>
+<!--pagination code ends here-->
+
 {% endblock %}

@@ -27,3 +27,5 @@ class BillingForm(ModelForm):
 	class Meta:
 		model = BillingAddress
 		fields = ['address', 'zipcode', 'city', 'landmark']
+
+
